@@ -1,0 +1,100 @@
+buildscript {
+    ext {
+        springboot_version = '2.4.2'
+        kotlin_version = '1.4.30'
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springboot_version")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+ext {
+    springboot_version = "2.4.2"
+    servlet_version = "4.0.1"
+}
+
+allprojects {
+    group 'com.kevin'
+    version '1.0-SNAPSHOT'
+    apply plugin: 'io.spring.dependency-management'
+}
+dependencyManagement {
+    dependencies {
+        dependency "javax.servlet:javax.servlet-api:$servlet_version"
+        dependency("org.apache.commons:commons-lang3:3.8.1")
+    }
+
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:$springboot_version")
+    }
+
+}
+
+subprojects {
+    apply {
+        plugin('java')
+        plugin('maven')
+        plugin('idea')
+        plugin('org.springframework.boot')
+        plugin('org.jetbrains.kotlin.jvm')
+        plugin('java-library')
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    }
+
+    dependencies {
+        compile("org.jetbrains.kotlin:kotlin-stdlib")
+        compile("org.springframework.boot:spring-boot-starter-web:$springboot_version") {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        }
+        compile("org.springframework.boot:spring-boot-starter-undertow")
+
+
+        testCompile("org.springframework.boot:spring-boot-starter-test:$springboot_version")
+        testCompile("junit:junit:4.12")
+    }
+
+    configurations {
+        //移除spring boot 默认logger依赖
+        all*.exclude module: 'spring-boot-starter-logging'
+    }
+
+//    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+
+    compileKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ['-Xjsr305=strict']
+            jvmTarget = '1.8'
+        }
+    }
+
+    compileTestKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ['-Xjsr305=strict']
+            jvmTarget = '1.8'
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
+
+
+
+

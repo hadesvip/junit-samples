@@ -1,0 +1,29 @@
+logging:
+  level:
+    root: info
+  file:
+    name: mockito-sample-app.log
+    path: logs
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+  logback:
+    rollingpolicy:
+      max-file-size: 15MB
+server:
+  port: 9090
+  undertow:
+    accesslog:
+      enabled: true
+      dir: undertow-access-logs
+      pattern: common
+      rotate: true
+      prefix: mockito-sample-app-access-log.
+      suffix: log
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true

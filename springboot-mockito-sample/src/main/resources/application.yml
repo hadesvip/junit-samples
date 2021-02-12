@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: mockito-sample-app
+  mandatory-file-encoding: utf-8
+  profiles:
+    active: dev
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+
