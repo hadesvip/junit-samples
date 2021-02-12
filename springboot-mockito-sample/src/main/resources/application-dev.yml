@@ -2,7 +2,7 @@ logging:
   level:
     root: info
   file:
-    name: mockito-sample-app.log
+    name: logs/mockito-sample-app.log
     path: logs
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS
@@ -14,7 +14,7 @@ server:
   undertow:
     accesslog:
       enabled: true
-      dir: undertow-access-logs
+      dir: logs
       pattern: common
       rotate: true
       prefix: mockito-sample-app-access-log.

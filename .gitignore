@@ -39,3 +39,5 @@ gradle.properties
 
 ### VS Code ###
 .vscode/
+
+logs

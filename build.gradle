@@ -9,7 +9,6 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springboot_version")
@@ -75,6 +74,14 @@ subprojects {
     configurations {
         //移除spring boot 默认logger依赖
         all*.exclude module: 'spring-boot-starter-logging'
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+
     }
 
 //    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
