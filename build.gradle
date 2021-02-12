@@ -23,11 +23,21 @@ ext {
     servlet_version = "4.0.1"
 }
 
+
 allprojects {
     group 'com.kevin'
     version '1.0-SNAPSHOT'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'idea'
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
 dependencyManagement {
     dependencies {
         dependency "javax.servlet:javax.servlet-api:$servlet_version"
@@ -42,9 +52,7 @@ dependencyManagement {
 
 subprojects {
     apply {
-        plugin('java')
         plugin('maven')
-        plugin('idea')
         plugin('org.springframework.boot')
         plugin('org.jetbrains.kotlin.jvm')
         plugin('java-library')
@@ -57,10 +65,7 @@ subprojects {
 
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib")
-        compile("org.springframework.boot:spring-boot-starter-web:$springboot_version") {
-            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-        }
-        compile("org.springframework.boot:spring-boot-starter-undertow")
+//        compile("org.springframework.boot:spring-boot-starter-undertow")
 
 
         testCompile("org.springframework.boot:spring-boot-starter-test:$springboot_version")
