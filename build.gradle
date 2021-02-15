@@ -55,6 +55,7 @@ subprojects {
         plugin('org.springframework.boot')
         plugin('org.jetbrains.kotlin.jvm')
         plugin('java-library')
+        plugin('project-report')
     }
 
     repositories {
@@ -69,11 +70,16 @@ subprojects {
 
         testCompile("org.springframework.boot:spring-boot-starter-test:$springboot_version")
         testCompile("junit:junit:4.12")
+//        testImplementation "org.mockito:mockito-core:3.6.28"
+        testRuntime module('net.sourceforge.cobertura:cobertura:1.9.4') {
+            dependencies "asm:asm:3.1", "oro:oro:2.0.8", "asm:asm-tree:3.0"
+        }
+        testCompile "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     }
 
     configurations {
         //移除spring boot 默认logger依赖
-        all*.exclude module: 'spring-boot-starter-logging'
+//        all*.exclude module: 'spring-boot-starter-logging'
         developmentOnly
         runtimeClasspath {
             extendsFrom developmentOnly
